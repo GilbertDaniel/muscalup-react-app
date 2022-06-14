@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from '@mui/material/Pagination';
 import { Box, Stack, Typography } from '@mui/material';
-
-import { exerciseOptions, fetchData } from '../utils/fetchData';
 import ExerciseCard from './ExerciseCard'
 // import Loader from './Loader';
 import exeData from '../utils/Exercise'
@@ -14,17 +12,14 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   useEffect(() => {
     const fetchExercisesData = () => {
-      let exercisesData = [];
       setData(exeData)
 
       if (bodyPart === 'all') {
-        exercisesData = exeData;
-        setExercises(exercisesData);
+        setExercises(exeData);
       } else {
         const exercisesData = data.filter(
           (item) => item.bodyPart === bodyPart,
         );
-        console.log("FitlerData: ", exercisesData)
         setExercises(exercisesData);
       }
 
@@ -45,7 +40,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     window.scrollTo({ top: 1800, behavior: 'smooth' });
   };
 
-  if (!currentExercises.length) return 'Loading!!!!!';
+  if (!currentExercises.length) return (<><h2>Sorry No Data Found!</h2></>);
 
   return (
     <Box id="exercises" sx={{ mt: { lg: '109px' } }} mt="50px" p="20px">
