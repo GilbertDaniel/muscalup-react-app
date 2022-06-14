@@ -1,8 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import HorizontalScrollbar from './HorizontalScrollbar';
+import { exerciseOptions, fetchData } from '../utils/fetchData';
 
-const SearchExercises = () => {
+const SearchExercises = ({setExercises}) => {
+  const [search, setSearch] = useState('');
+  const handleSearch = async () => {
+    if (search) {
+      const exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
+
+      const searchedExercises = exercisesData.filter(
+        (item) => item.name.toLowerCase().includes(search)
+               || item.target.toLowerCase().includes(search)
+               || item.equipment.toLowerCase().includes(search)
+               || item.bodyPart.toLowerCase().includes(search),
+      );
+
+      window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
+
+      setSearch('');
+      setExercises(searchedExercises);
+    }
+
+  }
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
       <Typography fontWeight={700} sx={{ fontSize: { lg: '44px', xs: '30px' } }} mb="49px" textAlign="center">
@@ -16,13 +36,15 @@ const SearchExercises = () => {
             width: { lg: '1170px', xs: '350px' },
             backgroundColor: '#fff', borderRadius: '40px'
           }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
           placeholder="Search Exercises"
           type="text"
         />
         <Button
           className="search-btn"
           sx={{
-            bgcolor: '#FF2625',
+            bgcolor: '#000',
             color: '#fff',
             textTransform: 'none',
             width: { lg: '173px', xs: '80px' },
@@ -31,6 +53,7 @@ const SearchExercises = () => {
             right: '0px',
             fontSize: { lg: '20px', xs: '14px' }
           }}
+          onClick={handleSearch}
         >
           Search
         </Button>
