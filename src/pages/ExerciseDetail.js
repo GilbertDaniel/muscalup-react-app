@@ -36,22 +36,22 @@ const ExerciseDetail = () => {
       const exerciseVideosData = await fetchData(`${youtubeSearchUrl}/search?query=${exerciseDetailData.name} exercise`, youtubeOptions);
       setExerciseVideos(exerciseVideosData.contents);
 
-      // const targetMuscleExercisesData = await fetchData(`${exerciseDbUrl}/exercises/target/${exerciseDetailData.target}`, exerciseOptions);
-      // setTargetMuscleExercises(targetMuscleExercisesData);
-
-      // const equimentExercisesData = await fetchData(`${exerciseDbUrl}/exercises/equipment/${exerciseDetailData.equipment}`, exerciseOptions);
-      // setEquipmentExercises(equimentExercisesData);
-
-      const targetMuscleExercisesData = data.filter(
-        (item) => item.target === exerciseDetail.target,
-      );
+      const targetMuscleExercisesData = await fetchData(`${exerciseDbUrl}/exercises/target/${exerciseDetailData.target}`, exerciseOptions);
       setTargetMuscleExercises(targetMuscleExercisesData);
 
-
-      const equimentExercisesData = data.filter(
-        (item) => item.equipment === exerciseDetail.equipment,
-      );
+      const equimentExercisesData = await fetchData(`${exerciseDbUrl}/exercises/equipment/${exerciseDetailData.equipment}`, exerciseOptions);
       setEquipmentExercises(equimentExercisesData);
+
+      // const targetMuscleExercisesData = data.filter(
+      //   (item) => item.target === exerciseDetail.target,
+      // );
+      // setTargetMuscleExercises(targetMuscleExercisesData);
+
+
+      // const equimentExercisesData = data.filter(
+      //   (item) => item.equipment === exerciseDetail.equipment,
+      // );
+      // setEquipmentExercises(equimentExercisesData);
 
 
       
